@@ -18,6 +18,16 @@ const ads = defineCollection({
       'Experiential',
       'Integrated',
     ]),
+    kind: z
+      .enum([
+        'Great ad',
+        'Social media ad',
+        'TikTok ad',
+        'Great Creator Ad',
+        'Ad Professor Original',
+      ])
+      .default('Great ad')
+      .describe('Format tag in The Ad Professor newsletter style.'),
 
     // Media
     adUrl: z.string().url().optional(),
@@ -28,6 +38,14 @@ const ads = defineCollection({
     publishedAt: z.date(),
     featured: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+
+    // Ad Professor surface — what shows at the top of every entry
+    principle: z
+      .string()
+      .describe('The named principle in The Ad Professor style, e.g. "The Handbrake Turn", "Reframe The Dismissed Group".'),
+    breakdown: z
+      .string()
+      .describe('2-4 line short-form analysis. Step 1 → Step 2, X=boring/Y=magic, or one aphorism.'),
 
     // The framework — six required fields per entry
     hook: z.string().describe('Exactly what stops the scroll in the first 2 seconds.'),

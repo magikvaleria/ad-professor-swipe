@@ -38,7 +38,7 @@ const dateStr = data.publishedAt.toLocaleDateString('en-US', {
   <article class="max-w-prose mx-auto px-6 pt-16 pb-12">
     <header class="mb-10">
       <div class="font-sans text-[11px] tracking-wide uppercase text-ink/50 mb-3">
-        {data.brand} · {data.year} · {data.medium}{data.agency ? ` · ${data.agency}` : ''}
+        {data.kind} · {data.brand} · {data.year} · {data.medium}{data.agency ? ` · ${data.agency}` : ''}
       </div>
       <h1 class="font-serif text-4xl md:text-5xl leading-[1.1] text-ink">{data.title}</h1>
       <div class="font-sans text-xs text-ink/50 mt-4">Filed {dateStr}</div>
@@ -56,6 +56,20 @@ const dateStr = data.publishedAt.toLocaleDateString('en-US', {
         ></iframe>
       </div>
     )}
+
+    <section class="mb-12 -mx-1 sm:-mx-3 px-6 py-6 bg-paper border border-rule">
+      <div class="font-sans text-[12px] text-accent mb-2">
+        <span class="mr-1">🧪</span><span class="font-medium uppercase tracking-wider">Principle</span>
+      </div>
+      <p class="font-serif text-2xl md:text-3xl leading-tight text-ink mb-4">{data.principle}</p>
+      <div class="font-serif text-base leading-relaxed text-ink/85 whitespace-pre-line">
+        {data.breakdown}
+      </div>
+    </section>
+
+    <div class="mb-12 font-sans text-[11px] tracking-wider uppercase text-ink/40 text-center">
+      ⸻ The deep dive ⸻
+    </div>
 
     <section class="mb-10">
       <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Hook</h2>
