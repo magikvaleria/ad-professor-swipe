@@ -62,6 +62,46 @@ const ads = defineCollection({
     appliedExample: z
       .string()
       .describe('The template applied to a different category as a test of generalizability.'),
+
+    // Ad Factory output — one creative per persona per analysis
+    creatives: z
+      .array(
+        z.object({
+          trackingName: z
+            .string()
+            .describe('KEYWORD_creative_audience_v# per Meta Ads Manager convention.'),
+          persona: z.enum(['Maya', 'Kate', 'Linda', 'Helen']),
+          angle: z.enum([
+            'NODRAW',
+            'REMEMBER',
+            'WONDER',
+            'GIRL',
+            'FORGOT',
+            'ANTIAI',
+            'SUNDAY',
+            'GASP',
+            'ORDER',
+            'LINEAGE',
+            'FLAT',
+            'HEIRLOOM',
+            'LASTAWE',
+          ]),
+          format: z.string().describe('e.g. "Organic-looking static", "2-screen ASMR process".'),
+          primaryText: z.string().describe('Meta ad primary text (caption).'),
+          headline: z.string().describe('Bold line under the creative.'),
+          description: z.string().optional(),
+          cta: z
+            .enum(['Learn More', 'Sign Up', 'Get Started', 'Shop Now', 'Apply Now'])
+            .default('Learn More'),
+          image: z.string().optional().describe('Path to creative asset under /public.'),
+          videoEmbedUrl: z.string().url().optional(),
+          status: z
+            .enum(['draft', 'testing', 'scaling', 'killed', 'retargeting'])
+            .default('draft'),
+          notes: z.string().optional(),
+        })
+      )
+      .default([]),
   }),
 });
 

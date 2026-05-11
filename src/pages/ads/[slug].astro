@@ -103,6 +103,29 @@ const dateStr = data.publishedAt.toLocaleDateString('en-US', {
       <div class="bg-ink/[0.03] border-l-2 border-accent/40 px-5 py-4 font-serif text-base leading-relaxed text-ink whitespace-pre-line">{data.appliedExample}</div>
     </section>
 
+    {data.creatives && data.creatives.length > 0 && (
+      <section class="mb-12 pt-8 border-t border-rule">
+        <div class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Output → Ad Factory</div>
+        <p class="font-serif text-base text-ink/80 mb-5 leading-relaxed">
+          {data.creatives.length} Meta ad {data.creatives.length === 1 ? 'creative was' : 'creatives were'} derived from this template — one per persona.
+        </p>
+        <ul class="space-y-2 font-sans text-sm">
+          {data.creatives.map((c) => (
+            <li>
+              <a href={`http://localhost:4322/creatives/${c.trackingName}`} class="text-ink hover:text-accent flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <span class="font-mono text-[11px] text-accent">{c.angle}</span>
+                <span class="font-medium">{c.persona}</span>
+                <span class="text-ink/60 italic">{c.headline}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a href="http://localhost:4322" class="inline-block mt-4 text-xs text-ink/60 hover:text-accent">
+          View all creatives in Ad Factory →
+        </a>
+      </section>
+    )}
+
     <div class="font-serif text-base text-ink/85 leading-relaxed [&>p]:mb-4 [&>p:last-child]:mb-0">
       <Content />
     </div>
