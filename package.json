@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync-cosmology": "cp \"/Users/thevalerierojas/Cosmology Analyses/synthesis.json\" src/data/cosmology.json"
   },
   "dependencies": {
     "astro": "^4.16.18",
