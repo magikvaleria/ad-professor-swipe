@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MechanismBadge from '../../components/MechanismBadge.astro';
 import TagPill from '../../components/TagPill.astro';
+import { aspectByName, aspectSlug } from '../../lib/cosmology';
 
 export async function getStaticPaths() {
   const ads = (await getCollection('ads')).sort(
@@ -66,6 +67,63 @@ const dateStr = data.publishedAt.toLocaleDateString('en-US', {
         {data.breakdown}
       </div>
     </section>
+
+    {data.cosmologyContext && (
+      <section class="mb-12 px-6 py-6 bg-ink/[0.02] border-l-2 border-accent">
+        <div class="flex items-baseline justify-between mb-3">
+          <div class="font-sans text-[12px] text-accent">
+            <span class="mr-1">✦</span><span class="font-medium uppercase tracking-wider">The sky at filing</span>
+          </div>
+          <a href="/sky" class="font-sans text-[11px] text-ink/50 hover:text-accent">/sky →</a>
+        </div>
+
+        <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Window</div>
+        <div class="font-serif text-base text-ink mb-4">{data.cosmologyContext.window}</div>
+
+        <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Resonant aspects</div>
+        <ul class="font-serif text-base text-ink mb-5 space-y-1">
+          {data.cosmologyContext.resonantAspects.map((name) => {
+            const a = aspectByName(name);
+            return (
+              <li>
+                <a href={`/sky#${aspectSlug(name)}`} class="text-ink hover:text-accent">
+                  {name}
+                </a>
+                {a && <span class="text-ink/55 italic text-sm"> — {a.meaning.split('. ')[0]}.</span>}
+              </li>
+            );
+          })}
+        </ul>
+
+        {data.cosmologyContext.historicalEcho && (
+          <>
+            <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Historical echo</div>
+            <div class="font-serif text-base text-ink/85 leading-relaxed whitespace-pre-line mb-5">
+              {data.cosmologyContext.historicalEcho}
+            </div>
+          </>
+        )}
+
+        <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Why this template, in this sky</div>
+        <div class="font-serif text-base text-ink/85 leading-relaxed whitespace-pre-line mb-5">
+          {data.cosmologyContext.framingNotes}
+        </div>
+
+        {data.cosmologyContext.feedsAngles.length > 0 && (
+          <>
+            <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Feeds the Ad Factory angles</div>
+            <ul class="space-y-3">
+              {data.cosmologyContext.feedsAngles.map((f) => (
+                <li class="font-serif text-[15px] text-ink/85 leading-relaxed">
+                  <span class="font-sans text-[11px] font-medium text-accent">{f.persona} × {f.angle}</span>
+                  <div class="text-ink/80">{f.cosmologyLink}</div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
+    )}
 
     <div class="mb-12 font-sans text-[11px] tracking-wider uppercase text-ink/40 text-center">
       ⸻ The deep dive ⸻

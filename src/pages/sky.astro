@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { cosmology, aspectSlug } from '../lib/cosmology';
+---
+<BaseLayout title={`The sky · ${cosmology.window_label}`}>
+  <article class="max-w-prose mx-auto px-6 pt-16 pb-24">
+    <div class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">
+      Synthesis generated {cosmology.generated_at} · Window: {cosmology.window_label}
+    </div>
+    <h1 class="font-serif text-4xl md:text-5xl leading-[1.1] text-ink mb-6">The sky right now</h1>
+
+    <p class="font-serif text-xl text-ink/85 leading-relaxed italic mb-12 pl-5 border-l-2 border-accent">
+      {cosmology.headline}
+    </p>
+
+    <section class="mb-12">
+      <h2 class="font-serif text-2xl text-ink mb-5">Dominant aspects</h2>
+      <ul class="space-y-6">
+        {cosmology.dominant_aspects.map((a) => (
+          <li id={aspectSlug(a.name)} class="scroll-mt-8">
+            <div class="font-serif text-lg text-ink mb-1">{a.name}</div>
+            <div class="font-sans text-xs text-ink/55 mb-2">Last exact: {a.last_exact}</div>
+            <p class="font-serif text-base text-ink/85 leading-relaxed">{a.meaning}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-serif text-2xl text-ink mb-5">Collective psychological state</h2>
+      <ul class="font-serif text-base text-ink/85 leading-relaxed space-y-2">
+        {cosmology.psychological_state.map((s) => <li>· {s}</li>)}
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-serif text-2xl text-ink mb-5">Framing table</h2>
+      <p class="font-sans text-sm text-ink/65 mb-5">Copywriting do/don't for this window.</p>
+      <div class="grid grid-cols-2 gap-x-4 gap-y-3 font-sans text-sm">
+        <div class="text-[11px] uppercase tracking-wider text-ink/50 col-span-1">Avoid</div>
+        <div class="text-[11px] uppercase tracking-wider text-ink/50 col-span-1">Use instead</div>
+        {cosmology.framing_table.map((row) => (
+          <>
+            <div class="text-ink/65 line-through decoration-accent/40">{row.avoid}</div>
+            <div class="text-ink">{row.use}</div>
+          </>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-serif text-2xl text-ink mb-5">Cosmology-linked ad angles</h2>
+      <ul class="space-y-5">
+        {cosmology.ad_angles.map((angle) => (
+          <li>
+            <div class="font-serif text-lg text-ink mb-2">{angle.framing}</div>
+            <ul class="font-serif text-sm text-ink/75 leading-relaxed space-y-1 pl-5">
+              {angle.examples.map((e) => <li class="list-['—_'] pl-1">{e}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="mt-16 pt-8 border-t border-rule font-sans text-xs text-ink/55 leading-relaxed">
+      Synthesis source: <code class="font-mono">/Users/thevalerierojas/Cosmology Analyses/synthesis.json</code>.
+      The astronomy is computed live in the upstream Flask app; this snapshot is read via symlink.
+      Refresh by telling Claude Code: <em>refresh the zeitgeist synthesis</em>.
+    </div>
+  </article>
+</BaseLayout>

@@ -63,6 +63,34 @@ const ads = defineCollection({
       .string()
       .describe('The template applied to a different category as a test of generalizability.'),
 
+    // Cosmology layer — why this ad, given the current sky
+    cosmologyContext: z
+      .object({
+        window: z.string().describe('e.g. "Spring 2026" — matches synthesis.json window_label.'),
+        resonantAspects: z
+          .array(z.string())
+          .describe('Names of dominant_aspects this ad resonates with.'),
+        historicalEcho: z
+          .string()
+          .optional()
+          .describe('Optional: era resonance, e.g. an ad from a previous occurrence of one of the current aspects.'),
+        framingNotes: z
+          .string()
+          .describe('Why this template, in this sky. The cosmological case for the analysis.'),
+        feedsAngles: z
+          .array(
+            z.object({
+              persona: z.enum(['Maya', 'Kate', 'Linda', 'Helen']),
+              angle: z.string(),
+              cosmologyLink: z
+                .string()
+                .describe('Which cosmological currents this persona × angle pairing meets.'),
+            })
+          )
+          .default([]),
+      })
+      .optional(),
+
     // Ad Factory output — one creative per persona per analysis
     creatives: z
       .array(

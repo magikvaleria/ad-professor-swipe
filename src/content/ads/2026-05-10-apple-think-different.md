@@ -52,6 +52,29 @@ appliedExample: |
   [A single sheet of cotton paper drying in afternoon light, one wash of gold pigment settling into the fiber. No logo, no price, no call to action — just the work.]
 
   Same template both times. The mechanism is identical: the reader recognizes herself in a generous reframe — *I do save those, I did pick the gold one* — before the brand is named, so the workshop arrives as permission rather than a pitch. Notice the withholding does even more work here than for Apple: a watercolor course is a low-stakes purchase that lives or dies on whether the buyer believes she's the kind of person who paints. The product is the permission slip.
+cosmologyContext:
+  window: "Spring 2026"
+  resonantAspects:
+    - "Saturn in Aries"
+    - "Saturn conjunct Neptune in Aries"
+    - "Pluto in Aquarius"
+  historicalEcho: |
+    Apple's Think Different aired in 1997 — the last time Saturn was in Aries (1996–1999). The template's pull right now is partly because we're back in the same astrological signature: the lone individual having to prove they're real, identity audited under reality-check pressure. The ad and the current sky share a fingerprint.
+  framingNotes: |
+    "Reframe The Dismissed Group" meets the Saturn–Neptune 'am I real?' question and the Pluto-in-Aquarius redistribution of credibility from legacy gatekeepers to those previously excluded. The mechanism — name the overlooked, stack their proof, withhold the brand — is the cosmological move of this season: re-grounding identity outside the dissolving narratives. Apple's template is uncannily on-frequency for Spring 2026.
+  feedsAngles:
+    - persona: "Maya"
+      angle: "ANTIAI"
+      cosmologyLink: "Saturn–Neptune in Aries (the AI/hype hangover, reality-check on what's real) + Uranus in Gemini (information itself being rewired). Maya feels both currents most sharply — she lives inside the algorithm and is starving for what AI cannot render. 'Most things now are made of pixels. Watercolor isn't.' is the Saturn-Neptune line in a single sentence."
+    - persona: "Kate"
+      angle: "GIRL"
+      cosmologyLink: "Saturn in Aries (reality-check on personal initiative — 'am I still that person?') + Jupiter exalted in Cancer (return to home/self, sanctuary). Kate's 'creative is something I was, past tense' IS a Saturn-Neptune identity audit; Jupiter-Cancer is the answering current — she's still in there. The kitchen table is Jupiter-in-Cancer's natural altar."
+    - persona: "Linda"
+      angle: "LINEAGE"
+      cosmologyLink: "Pluto in Aquarius (legacy systems eroding, ancient women's traditions re-emerging from under the rubble of the dominant story) + Jupiter exalted in Cancer (lineage as exalted theme — transmission across generations, the grandmother current). Apple stacked external male icons; Linda's stacking is matrilineal, which is more cosmologically accurate for the moment."
+    - persona: "Helen"
+      angle: "FORGOT"
+      cosmologyLink: "Saturn–Neptune (returning to what was once real before the dream was stress-tested) + Jupiter exalted in Cancer (kitchen-table sanctuary, the room you remember). Helen's whole frame — 'what I put down at twenty-five is still here' — is pure Saturn-return meeting Jupiter-in-Cancer cocooning. Time-folded, not time-marched."
 creatives:
   - trackingName: "ANTIAI_real-not-pixels_emerging_v1"
     persona: "Maya"
