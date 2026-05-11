@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import MechanismBadge from './MechanismBadge.astro';
+
+interface Props {
+  ad: CollectionEntry<'ads'>;
+}
+
+const { ad } = Astro.props;
+const { slug, data } = ad;
+const topMechanisms = (data.mechanisms ?? []).slice(0, 3);
+const trimmedHook = data.hook.replace(/^["'""]|["'""]$/g, '');
+const hookPreview = trimmedHook.length > 140 ? trimmedHook.slice(0, 140).trim() + '…' : trimmedHook;
+---
+<article class="group">
+  <a href={`/ads/${slug}`} class="block no-underline">
+    {data.thumbnail ? (
+      <div class="aspect-[4/3] overflow-hidden bg-ink/5 mb-4 border border-rule">
+        <img
+          src={data.thumbnail}
+          alt={data.title}
+          loading="lazy"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+        />
+      </div>
+    ) : (
+      <div class="aspect-[4/3] flex items-center justify-center bg-paper border border-rule mb-4 p-6">
+        <p class="font-serif text-lg italic text-ink/85 text-center leading-snug">
+          &ldquo;{hookPreview}&rdquo;
+        </p>
+      </div>
+    )}
+    <div class="font-sans text-[11px] tracking-wide uppercase text-ink/50 mb-1">
+      {data.brand} · {data.year}
+    </div>
+    <h3 class="font-serif text-xl leading-tight text-ink group-hover:text-accent transition-colors mb-3">
+      {data.title}
+    </h3>
+  </a>
+  {topMechanisms.length > 0 && (
+    <div class="flex flex-wrap gap-1.5">
+      {topMechanisms.map((m) => <MechanismBadge name={m} />)}
+    </div>
+  )}
+</article>

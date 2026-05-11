@@ -1,0 +1,54 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdCard from '../../components/AdCard.astro';
+
+export async function getStaticPaths() {
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+  const ads = await getCollection('ads');
+  const map = new Map<string, { label: string; entries: CollectionEntry<'ads'>[] }>();
+  for (const ad of ads) {
+    for (const m of ad.data.mechanisms) {
+      const slug = slugify(m);
+      if (!map.has(slug)) map.set(slug, { label: m, entries: [] });
+      map.get(slug)!.entries.push(ad);
+    }
+  }
+  return Array.from(map.entries()).map(([slug, { label, entries }]) => ({
+    params: { mechanism: slug },
+    props: {
+      label,
+      entries: entries.sort(
+        (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+      ),
+    },
+  }));
+}
+
+interface Props {
+  label: string;
+  entries: CollectionEntry<'ads'>[];
+}
+
+const { label, entries } = Astro.props;
+---
+<BaseLayout title={`${label} · Ad Swipe File`}>
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Mechanism</div>
+    <h1 class="font-serif text-4xl text-ink mb-3 lowercase">{label}</h1>
+    <p class="font-sans text-sm text-ink/60">
+      {entries.length} {entries.length === 1 ? 'entry uses' : 'entries use'} this mechanism.
+    </p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+      {entries.map((ad) => <AdCard ad={ad} />)}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,130 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MechanismBadge from '../../components/MechanismBadge.astro';
+import TagPill from '../../components/TagPill.astro';
+
+export async function getStaticPaths() {
+  const ads = (await getCollection('ads')).sort(
+    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+  );
+  return ads.map((ad, i) => ({
+    params: { slug: ad.slug },
+    props: {
+      ad,
+      prev: ads[i + 1] ?? null,
+      next: ads[i - 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  ad: CollectionEntry<'ads'>;
+  prev: CollectionEntry<'ads'> | null;
+  next: CollectionEntry<'ads'> | null;
+}
+
+const { ad, prev, next } = Astro.props;
+const { data } = ad;
+const { Content } = await ad.render();
+const dateStr = data.publishedAt.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+<BaseLayout title={`${data.title} — ${data.brand} · Ad Swipe File`} description={data.insight.slice(0, 160)}>
+  <article class="max-w-prose mx-auto px-6 pt-16 pb-12">
+    <header class="mb-10">
+      <div class="font-sans text-[11px] tracking-wide uppercase text-ink/50 mb-3">
+        {data.brand} · {data.year} · {data.medium}{data.agency ? ` · ${data.agency}` : ''}
+      </div>
+      <h1 class="font-serif text-4xl md:text-5xl leading-[1.1] text-ink">{data.title}</h1>
+      <div class="font-sans text-xs text-ink/50 mt-4">Filed {dateStr}</div>
+    </header>
+
+    {data.embedUrl && (
+      <div class="aspect-video w-full mb-12 border border-rule bg-ink/5">
+        <iframe
+          src={data.embedUrl}
+          title={data.title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="w-full h-full"
+        ></iframe>
+      </div>
+    )}
+
+    <section class="mb-10">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Hook</h2>
+      <p class="font-serif text-lg leading-relaxed text-ink">{data.hook}</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Insight</h2>
+      <p class="font-serif text-lg leading-relaxed text-ink">{data.insight}</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Mechanisms</h2>
+      <div class="flex flex-wrap gap-2">
+        {data.mechanisms.map((m) => <MechanismBadge name={m} />)}
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Structure</h2>
+      <div class="font-serif text-lg leading-relaxed text-ink whitespace-pre-line">{data.structure}</div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Template</h2>
+      <div class="bg-ink/[0.03] border-l-2 border-accent/40 px-5 py-4 font-serif text-base leading-relaxed text-ink whitespace-pre-line">{data.template}</div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="font-sans text-[11px] uppercase tracking-wider text-ink/50 mb-3">Applied example</h2>
+      <div class="bg-ink/[0.03] border-l-2 border-accent/40 px-5 py-4 font-serif text-base leading-relaxed text-ink whitespace-pre-line">{data.appliedExample}</div>
+    </section>
+
+    <div class="font-serif text-base text-ink/85 leading-relaxed [&>p]:mb-4 [&>p:last-child]:mb-0">
+      <Content />
+    </div>
+
+    {data.tags.length > 0 && (
+      <div class="mt-12 pt-6 border-t border-rule">
+        {data.tags.map((t) => <TagPill tag={t} />)}
+      </div>
+    )}
+
+    {data.adUrl && (
+      <div class="mt-8 font-sans text-xs text-ink/50">
+        Source:{' '}
+        <a href={data.adUrl} target="_blank" rel="noopener" class="hover:text-accent">
+          {new URL(data.adUrl).hostname}
+        </a>
+      </div>
+    )}
+
+    <nav class="mt-16 pt-8 border-t border-rule grid grid-cols-2 gap-6 font-sans text-sm">
+      <div>
+        {prev && (
+          <a href={`/ads/${prev.slug}`} class="block group no-underline">
+            <div class="text-[11px] uppercase tracking-wide text-ink/50 mb-1">← Older</div>
+            <div class="text-ink group-hover:text-accent">{prev.data.title}</div>
+          </a>
+        )}
+      </div>
+      <div class="text-right">
+        {next && (
+          <a href={`/ads/${next.slug}`} class="block group no-underline">
+            <div class="text-[11px] uppercase tracking-wide text-ink/50 mb-1">Newer →</div>
+            <div class="text-ink group-hover:text-accent">{next.data.title}</div>
+          </a>
+        )}
+      </div>
+    </nav>
+  </article>
+</BaseLayout>

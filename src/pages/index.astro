@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AdCard from '../components/AdCard.astro';
+
+const ads = (await getCollection('ads')).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+const latest = ads.slice(0, 12);
+---
+<BaseLayout>
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <h1 class="font-serif text-4xl md:text-5xl leading-tight text-ink mb-3">Ad Swipe File</h1>
+    <p class="font-sans text-base text-ink/70 max-w-2xl">
+      A daily archive of ads that work, and why.
+    </p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-24">
+    {latest.length === 0 ? (
+      <p class="font-serif text-lg text-ink/60 italic">No entries yet.</p>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        {latest.map((ad) => <AdCard ad={ad} />)}
+      </div>
+    )}
+
+    {ads.length > 12 && (
+      <div class="mt-16 pt-8 border-t border-rule font-sans text-sm">
+        <a href="/archive" class="text-accent hover:underline">
+          See all {ads.length} entries →
+        </a>
+      </div>
+    )}
+  </section>
+</BaseLayout>

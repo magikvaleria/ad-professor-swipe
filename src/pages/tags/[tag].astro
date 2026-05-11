@@ -1,0 +1,47 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdCard from '../../components/AdCard.astro';
+
+export async function getStaticPaths() {
+  const ads = await getCollection('ads');
+  const tagMap = new Map<string, CollectionEntry<'ads'>[]>();
+  for (const ad of ads) {
+    for (const tag of ad.data.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, []);
+      tagMap.get(tag)!.push(ad);
+    }
+  }
+  return Array.from(tagMap.entries()).map(([tag, entries]) => ({
+    params: { tag },
+    props: {
+      tag,
+      entries: entries.sort(
+        (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+      ),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  entries: CollectionEntry<'ads'>[];
+}
+
+const { tag, entries } = Astro.props;
+---
+<BaseLayout title={`#${tag} · Ad Swipe File`}>
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <div class="font-sans text-[11px] uppercase tracking-wide text-ink/50 mb-2">Tag</div>
+    <h1 class="font-serif text-4xl text-ink mb-3">#{tag}</h1>
+    <p class="font-sans text-sm text-ink/60">
+      {entries.length} {entries.length === 1 ? 'entry' : 'entries'}.
+    </p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+      {entries.map((ad) => <AdCard ad={ad} />)}
+    </div>
+  </section>
+</BaseLayout>

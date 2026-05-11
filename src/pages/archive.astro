@@ -1,0 +1,133 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const ads = (await getCollection('ads')).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+
+const years = Array.from(new Set(ads.map((a) => a.data.year))).sort((a, b) => b - a);
+const mediums = Array.from(new Set(ads.map((a) => a.data.medium))).sort();
+const mechanisms = Array.from(new Set(ads.flatMap((a) => a.data.mechanisms))).sort();
+
+const rows = ads.map((a) => ({
+  slug: a.slug,
+  title: a.data.title,
+  brand: a.data.brand,
+  year: a.data.year,
+  medium: a.data.medium,
+  mechanisms: a.data.mechanisms,
+  date: a.data.publishedAt.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }),
+  iso: a.data.publishedAt.toISOString(),
+}));
+---
+<BaseLayout title="Archive · Ad Swipe File">
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-8">
+    <h1 class="font-serif text-4xl text-ink mb-3">Archive</h1>
+    <p class="font-sans text-sm text-ink/60">
+      {ads.length} {ads.length === 1 ? 'entry' : 'entries'}.
+    </p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-24">
+    <div class="font-sans text-sm flex flex-wrap gap-x-6 gap-y-3 mb-6 items-baseline">
+      <label class="flex items-baseline gap-2">
+        <span class="text-ink/60 text-[11px] uppercase tracking-wide">Year</span>
+        <select id="f-year" class="bg-paper border border-rule px-2 py-1 text-ink">
+          <option value="">All</option>
+          {years.map((y) => <option value={y}>{y}</option>)}
+        </select>
+      </label>
+      <label class="flex items-baseline gap-2">
+        <span class="text-ink/60 text-[11px] uppercase tracking-wide">Medium</span>
+        <select id="f-medium" class="bg-paper border border-rule px-2 py-1 text-ink">
+          <option value="">All</option>
+          {mediums.map((m) => <option value={m}>{m}</option>)}
+        </select>
+      </label>
+      <label class="flex items-baseline gap-2">
+        <span class="text-ink/60 text-[11px] uppercase tracking-wide">Mechanism</span>
+        <select id="f-mech" class="bg-paper border border-rule px-2 py-1 text-ink">
+          <option value="">All</option>
+          {mechanisms.map((m) => <option value={m}>{m}</option>)}
+        </select>
+      </label>
+      <label class="flex items-baseline gap-2 ml-auto">
+        <span class="text-ink/60 text-[11px] uppercase tracking-wide">Sort</span>
+        <select id="f-sort" class="bg-paper border border-rule px-2 py-1 text-ink">
+          <option value="date">Date</option>
+          <option value="brand">Brand</option>
+        </select>
+      </label>
+    </div>
+
+    <ul id="archive-list" class="divide-y divide-rule border-y border-rule">
+      {rows.map((r) => (
+        <li
+          class="archive-row grid grid-cols-12 gap-4 py-3 font-sans text-sm items-baseline"
+          data-year={r.year}
+          data-medium={r.medium}
+          data-mechanisms={r.mechanisms.join('|')}
+          data-brand={r.brand.toLowerCase()}
+          data-date={r.iso}
+        >
+          <a href={`/ads/${r.slug}`} class="col-span-12 sm:col-span-5 text-ink hover:text-accent no-underline">
+            {r.title}
+          </a>
+          <span class="col-span-6 sm:col-span-3 text-ink/70">{r.brand}</span>
+          <span class="col-span-3 sm:col-span-1 text-ink/50">{r.year}</span>
+          <span class="col-span-3 sm:col-span-1 text-ink/50">{r.medium}</span>
+          <span class="col-span-12 sm:col-span-2 text-ink/50 text-xs sm:text-right">{r.date}</span>
+        </li>
+      ))}
+    </ul>
+    <p id="archive-empty" class="hidden font-sans text-sm text-ink/50 py-8 text-center">
+      No entries match these filters.
+    </p>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const list = document.getElementById('archive-list');
+      const empty = document.getElementById('archive-empty');
+      const fYear = document.getElementById('f-year');
+      const fMedium = document.getElementById('f-medium');
+      const fMech = document.getElementById('f-mech');
+      const fSort = document.getElementById('f-sort');
+      if (!list || !empty || !fYear || !fMedium || !fMech || !fSort) return;
+
+      const rows = Array.from(list.querySelectorAll('.archive-row'));
+
+      function apply() {
+        const y = fYear.value;
+        const m = fMedium.value;
+        const k = fMech.value;
+        let visible = 0;
+        rows.forEach((r) => {
+          const mechs = (r.dataset.mechanisms || '').split('|');
+          const show =
+            (!y || r.dataset.year === y) &&
+            (!m || r.dataset.medium === m) &&
+            (!k || mechs.includes(k));
+          r.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        empty.classList.toggle('hidden', visible > 0);
+
+        const sort = fSort.value;
+        const sorted = [...rows].sort((a, b) => {
+          if (sort === 'brand') return a.dataset.brand.localeCompare(b.dataset.brand);
+          return (b.dataset.date || '').localeCompare(a.dataset.date || '');
+        });
+        sorted.forEach((el) => list.appendChild(el));
+      }
+
+      [fYear, fMedium, fMech, fSort].forEach((el) => el.addEventListener('change', apply));
+    })();
+  </script>
+</BaseLayout>

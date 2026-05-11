@@ -1,0 +1,17 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const slug = name
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/(^-|-$)/g, '');
+---
+<a
+  href={`/mechanisms/${slug}`}
+  class="inline-block font-sans text-[11px] tracking-wide lowercase px-2.5 py-0.5 border border-accent text-accent rounded-full no-underline hover:bg-accent hover:text-paper transition-colors"
+>
+  {name}
+</a>

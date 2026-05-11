@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: theme('colors.paper');
+    color: theme('colors.ink');
+    font-family: theme('fontFamily.serif');
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: theme('colors.rule');
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    text-decoration-color: theme('colors.accent');
+  }
+
+  ::selection {
+    background: theme('colors.accent');
+    color: theme('colors.paper');
+  }
+}
+
+@layer components {
+  .no-underline,
+  .no-underline:hover {
+    text-decoration: none;
+  }
+
+  .font-sans a,
+  nav a,
+  header a,
+  footer a {
+    text-decoration: none;
+  }
+}
