@@ -122,20 +122,20 @@ creatives:
   - trackingName: "LINEAGE_thousand-years-quiet_midlife_v1"
     persona: "Linda"
     angle: "LINEAGE"
-    format: "60s wordless vertical"
+    format: "Single still photograph, museum-poster framing"
     headline: "A thousand years of women painted in this much quiet."
     description: "Nature's Shimmer Watercolor Workshop · $47"
     cta: "Learn More"
     status: "draft"
     primaryText: |
-      Sixty seconds, almost no sound. A brush enters a small dish of water. Gold pigment is lifted. Cotton paper accepts the wash. The pigment settles into the fiber. The light moves across the page as the wash dries.
+      One photograph. A window-lit corner of a kitchen table. Cotton paper, mid-bloom of gold pigment. A brush at rest. Light folding across linen in the foreground. No text on the image. The image is the whole sentence.
 
-      End card. Italic serif. "Shimmer Watercolor Studio."
+      Caption beneath, italic serif, small. "Shimmer Watercolor Studio."
 
       A thousand years of women painted in this much quiet.
     notes: |
-      Visual: 60s vertical micro-film. Composition emulates a Vermeer interior — a single window-lit corner, fabric in the foreground, brush and paper at center. Slow, near-still. No voiceover.
-      Why this fits: Linda's value frame rejects loud advertising as inherently undignified. The Gorilla move (refuse the claim, deliver the feeling) IS the dignified format. The reverent pacing rhymes with the lineage frame. The headline anchors the experience without dating it.
+      Visual: a single still photograph. Composition emulates a Vermeer interior. A window-lit corner, fabric in the foreground, brush and paper at center. Daylight only, no flash, no styling. The image carries the entire ad with no overlays, no logo on the visual. Caption sits underneath in the feed text.
+      Why this fits: a single frame IS the matrilineal pacing. The Gorilla template's pure-feeling delivery does not require motion when the still object is already loaded with felt-state. The reverent format Linda recognizes (museum poster, Vermeer reproduction, illuminated-manuscript page in a small frame) is the format. Pluto in Aquarius is the death of the loud sell. This is the quietest possible iteration of the rise of the quiet one.
 
   - trackingName: "FORGOT_remember-this-feeling_elder_v1"
     persona: "Helen"
