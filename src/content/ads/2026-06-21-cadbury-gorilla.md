@@ -12,6 +12,7 @@ breakdown: |
   Step 3. Place the brand at the emotional peak and trust the audience to attribute the feeling to you.
   Most ads describe. This one delivers. Delivery beats description forever.
 adUrl: "https://en.wikipedia.org/wiki/Gorilla_(advertisement)"
+embedUrl: "https://www.youtube.com/embed/NHtEyDrD4oA"
 publishedAt: 2026-06-21
 featured: true
 tags:

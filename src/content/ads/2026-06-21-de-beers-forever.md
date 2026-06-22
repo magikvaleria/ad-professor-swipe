@@ -12,6 +12,7 @@ breakdown: |
   Step 3. Repeat the phrase in every medium for a generation until the feeling and the product are inseparable in the culture.
   Most ads describe what is. This one created what wasn't, then waited for the culture to catch up.
 adUrl: "https://en.wikipedia.org/wiki/A_Diamond_Is_Forever"
+embedUrl: "https://www.youtube.com/embed/uDnmt5yUAi4"
 publishedAt: 2026-06-21
 featured: true
 tags:

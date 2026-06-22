@@ -11,6 +11,7 @@ breakdown: |
   Step 2. Show how the standard was manufactured. Not abstractly. In real time. On film.
   Step 3. Let the reveal do the work. The standard collapses in the audience's mind. The brand is the one who pulled the curtain.
 adUrl: "https://en.wikipedia.org/wiki/Dove_Campaign_for_Real_Beauty"
+embedUrl: "https://www.youtube.com/embed/iYhCn0jf46U"
 publishedAt: 2026-06-21
 featured: true
 tags:

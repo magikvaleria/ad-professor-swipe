@@ -12,6 +12,7 @@ breakdown: |
   Step 3. Leave the object of the verb undefined. The reader fills the it.
   Three words have outsold every reasoned argument for shoes for thirty-eight years.
 adUrl: "https://en.wikipedia.org/wiki/Just_Do_It"
+embedUrl: "https://www.youtube.com/embed/0yO7xLAGugQ"
 publishedAt: 2026-06-21
 featured: true
 tags:
